@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Calculadora</h1>
+    
+    <label for="num1">Número 1:</label>
+    <input type="number" id="num1" step="any" maxlength="6"><br><br>
+    
+    <label for="num2">Número 2:</label>
+    <input type="number" id="num2" step="any" maxlength="6"><br><br>
+
+    <label for="operation">Seleccione la operación:</label>
+    <select id="operation">
+        <option value="Suma">Suma</option>
+        <option value="Resta">Resta</option>
+        <option value="Multiplicacion">Multiplicación</option>
+        <option value="Division">División</option>
+        <option value="Potencia">Potencia</option>
+        <option value="Raiz">Raíz</option>
+        <option value="Personalizada">Operación personalizada</option>
+    </select><br><br>
+
+    <button onclick="calcular()">Calcular</button><br><br>
+
+    <p id="resultado"></p>
+
+    <script>
+        function calcular() {
+            var num1 = parseFloat(document.getElementById('num1').value);
+            var num2 = parseFloat(document.getElementById('num2').value);
+            var operation = document.getElementById('operation').value;
+            var resultado = '';
+
+            switch (operation) {
+                case 'Suma':
+                    resultado = new Operaciones.Suma(num1, num2).calcular();
+                    break;
+                case 'Resta':
+                    resultado = new Operaciones.Resta(num1, num2).calcular();
+                    break;
+                case 'Multiplicacion':
+                    resultado = new Operaciones.Multiplicacion(num1, num2).calcular();
+                    break;
+                case 'Division':
+                    try {
+                        resultado = new Operaciones.Division(num1, num2).calcular();
+                    } catch (error) {
+                        resultado = error.message;
+                    }
+                    break;
+                case 'Potencia':
+                    resultado = new Operaciones.Potencia(num1, num2).calcular();
+                    break;
+                case 'Raiz':
+                    try {
+                        resultado = new Operaciones.Raiz(num1, num2).calcular();
+                    } catch (error) {
+                        resultado = error.message;
+                    }
+                    break;
+                default:
+                    resultado = 'No se puede realizar la operación módulo.';
+            }
+
+            document.getElementById('resultado').innerText = 'El resultado es: ' + resultado;
+        }
+    </script>
+    <script src="operaciones.js"></script>
+</body>
+</html>
